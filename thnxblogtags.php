@@ -241,7 +241,7 @@ class thnxblogtags extends Module implements WidgetInterface {
 		$this->Register_Css();
 		$this->Register_Js();
 	}
-	public function renderWidget($hookName = null, array $configuration = [])
+	public function renderWidget($hookName = null, $configuration = array())
 	{
 		if(Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')){
 			$this->smarty->assign($this->getWidgetVariables($hookName,$configuration));
@@ -250,7 +250,7 @@ class thnxblogtags extends Module implements WidgetInterface {
 	    	return false;
 	    }	
 	}
-	public function getWidgetVariables($hookName = null, array $configuration = [])
+	public function getWidgetVariables($hookName = null, $configuration = array())
 	{
 	    if(Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')){
 		    $id_lang = (int)$this->context->language->id;
