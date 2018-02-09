@@ -1,7 +1,7 @@
 <?php
 use PrestaShop\PrestaShop\Core\Module\WidgetInterface;
 
-class thnxblogtags extends Module implements WidgetInterface
+class ThnxBlogTags extends Module implements WidgetInterface
 {
     public $css_files = array(
         array(
@@ -48,10 +48,10 @@ class thnxblogtags extends Module implements WidgetInterface
             return false;
         }
         $languages = Language::getLanguages(false);
-            foreach ($languages as $lang){
-                Configuration::updateValue('thnxbt_title_'.$lang['id_lang'],"Blog Tags");
-            }
-            Configuration::updateValue('thnxbt_tagcount',4);
+        foreach ($languages as $lang) {
+            Configuration::updateValue('thnxbt_title_'.$lang['id_lang'], "Blog Tags");
+        }
+            Configuration::updateValue('thnxbt_tagcount', 4);
             return true;
     }
     // For uninstallation service
@@ -114,9 +114,9 @@ class thnxblogtags extends Module implements WidgetInterface
         $helper->toolbar_scroll = true;
         $helper->submit_action = 'save' . $this->name;
         $languages = Language::getLanguages(false);
-            foreach ($languages as $lang){
-                $helper->fields_value['thnxbt_title'][$lang['id_lang']] = Configuration::get('thnxbt_title_'.$lang['id_lang']);
-            }
+        foreach ($languages as $lang) {
+            $helper->fields_value['thnxbt_title'][$lang['id_lang']] = Configuration::get('thnxbt_title_'.$lang['id_lang']);
+        }
             $helper->fields_value['thnxbt_tagcount'] = Configuration::get('thnxbt_tagcount');
         return $helper;
     }
@@ -126,10 +126,10 @@ class thnxblogtags extends Module implements WidgetInterface
         $html = '';
         if (Tools::isSubmit('save' . $this->name)) {
             $languages = Language::getLanguages(false);
-               foreach ($languages as $lang){
-                    Configuration::updateValue('thnxbt_title_'.$lang['id_lang'],Tools::getvalue('thnxbt_title_'.$lang['id_lang']));
-               }
-                Configuration::updateValue('thnxbt_tagcount',Tools::getvalue('thnxbt_tagcount'));
+            foreach ($languages as $lang) {
+                Configuration::updateValue('thnxbt_title_'.$lang['id_lang'], Tools::getvalue('thnxbt_title_'.$lang['id_lang']));
+            }
+                Configuration::updateValue('thnxbt_tagcount', Tools::getvalue('thnxbt_tagcount'));
         }
         $helper = $this->SettingForm();
         $html .= $helper->generateForm($this->fields_form);
@@ -140,9 +140,9 @@ class thnxblogtags extends Module implements WidgetInterface
         if ($path == null) {
             return false;
         }
-        if (file_exists($path)){
+        if (file_exists($path)) {
             $content = Tools::file_get_contents($path);
-            if (empty($content)){
+            if (empty($content)) {
                 return false;
             } else {
                 return true;
@@ -153,29 +153,29 @@ class thnxblogtags extends Module implements WidgetInterface
     }
     public function Register_Css()
     {
-        if (isset($this->css_files) && !empty($this->css_files)){
+        if (isset($this->css_files) && !empty($this->css_files)) {
             $theme_name = $this->context->shop->theme_name;
             $page_name = $this->context->controller->php_self;
             $root_path = _PS_ROOT_DIR_.'/';
             foreach ($this->css_files as $css_file) :
-                if (isset($css_file['key']) && !empty($css_file['key']) && isset($css_file['src']) && !empty($css_file['src'])){
+                if (isset($css_file['key']) && !empty($css_file['key']) && isset($css_file['src']) && !empty($css_file['src'])) {
                     $media = (isset($css_file['media']) && !empty($css_file['media'])) ? $css_file['media'] : 'all';
                     $priority = (isset($css_file['priority']) && !empty($css_file['priority'])) ? $css_file['priority'] : 50;
                     $page = (isset($css_file['page']) && !empty($css_file['page'])) ? $css_file['page'] : array('all');
-                    if (is_array($page)){
+                    if (is_array($page)) {
                         $pages = $page;
                     } else {
                         $pages = array($page);
                     }
-                    if (in_array($page_name, $pages) || in_array('all', $pages)){
-                        if (isset($css_file['load_theme']) && ($css_file['load_theme'] == true)){
+                    if (in_array($page_name, $pages) || in_array('all', $pages)) {
+                        if (isset($css_file['load_theme']) && ($css_file['load_theme'] == true)) {
                             $theme_file_src = 'themes/'.$theme_name.'/assets/css/'.$css_file['src'];
-                            if (self::isEmptyFileContet($root_path.$theme_file_src)){
+                            if (self::isEmptyFileContet($root_path.$theme_file_src)) {
                                 $this->context->controller->registerStylesheet($css_file['key'], $theme_file_src, ['media' => $media, 'priority' => $priority]);
                             }
                         } else {
                             $module_file_src = 'modules/'.$this->name.'/css/'.$css_file['src'];
-                            if (self::isEmptyFileContet($root_path.$module_file_src)){
+                            if (self::isEmptyFileContet($root_path.$module_file_src)) {
                                 $this->context->controller->registerStylesheet($css_file['key'], $module_file_src, ['media' => $media, 'priority' => $priority]);
                             }
                         }
@@ -187,29 +187,29 @@ class thnxblogtags extends Module implements WidgetInterface
     }
     public function Register_Js()
     {
-        if (isset($this->js_files) && !empty($this->js_files)){
+        if (isset($this->js_files) && !empty($this->js_files)) {
             $theme_name = $this->context->shop->theme_name;
             $page_name = $this->context->controller->php_self;
             $root_path = _PS_ROOT_DIR_.'/';
             foreach ($this->js_files as $js_file) :
-                if (isset($js_file['key']) && !empty($js_file['key']) && isset($js_file['src']) && !empty($js_file['src'])){
+                if (isset($js_file['key']) && !empty($js_file['key']) && isset($js_file['src']) && !empty($js_file['src'])) {
                     $position = (isset($js_file['position']) && !empty($js_file['position'])) ? $js_file['position'] : 'bottom';
                     $priority = (isset($js_file['priority']) && !empty($js_file['priority'])) ? $js_file['priority'] : 50;
                     $page = (isset($css_file['page']) && !empty($css_file['page'])) ? $css_file['page'] : array('all');
-                    if (is_array($page)){
+                    if (is_array($page)) {
                         $pages = $page;
                     } else {
                         $pages = array($page);
                     }
-                    if (in_array($page_name, $pages) || in_array('all', $pages)){
-                        if (isset($js_file['load_theme']) && ($js_file['load_theme'] == true)){
+                    if (in_array($page_name, $pages) || in_array('all', $pages)) {
+                        if (isset($js_file['load_theme']) && ($js_file['load_theme'] == true)) {
                             $theme_file_src = 'themes/'.$theme_name.'/assets/js/'.$js_file['src'];
-                            if (self::isEmptyFileContet($root_path.$theme_file_src)){
+                            if (self::isEmptyFileContet($root_path.$theme_file_src)) {
                                 $this->context->controller->registerJavascript($js_file['key'], $theme_file_src, ['position' => $position, 'priority' => $priority]);
                             }
                         } else {
                             $module_file_src = 'modules/'.$this->name.'/js/'.$js_file['src'];
-                            if (self::isEmptyFileContet($root_path.$module_file_src)){
+                            if (self::isEmptyFileContet($root_path.$module_file_src)) {
                                 $this->context->controller->registerJavascript($js_file['key'], $module_file_src, ['position' => $position, 'priority' => $priority]);
                             }
                         }
@@ -226,21 +226,21 @@ class thnxblogtags extends Module implements WidgetInterface
     }
     public function renderWidget($hookName = null, array $configuration = [])
     {
-        if (Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')){
-            $this->smarty->assign($this->getWidgetVariables($hookName,$configuration));
+        if (Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')) {
+            $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
             return $this->fetch('module:'.$this->name.'/views/templates/front/'.$this->name.'.tpl');
         } else {
             return false;
-        }   
+        }
     }
     public function getWidgetVariables($hookName = null, array $configuration = [])
     {
-        if (Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')){
+        if (Module::isInstalled('thnxblog') && Module::isEnabled('thnxblog')) {
             $id_lang = (int)$this->context->language->id;
             $thnxbt_title = Configuration::get('thnxbt_title_'.$id_lang);
             $thnxbt_tagcount = Configuration::get('thnxbt_tagcount');
             $thnxblogtags = array();
-            $thnxblogtags = thnxpostsclass::GetBlogTags($thnxbt_tagcount,'tag');
+            $thnxblogtags = thnxpostsclass::GetBlogTags($thnxbt_tagcount, 'tag');
             return array(
                 'thnxbt_title' => $thnxbt_title,
                 'thnxbt_tagcount' => $thnxbt_tagcount,
