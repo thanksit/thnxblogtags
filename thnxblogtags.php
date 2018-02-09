@@ -161,12 +161,26 @@ class thnxblogtags extends Module implements WidgetInterface {
         				if(isset($css_file['load_theme']) && ($css_file['load_theme'] == true)){
         					$theme_file_src = 'themes/'.$theme_name.'/assets/css/'.$css_file['src'];
         					if(self::isEmptyFileContet($root_path.$theme_file_src)){
-        						$this->context->controller->registerStylesheet($css_file['key'], $theme_file_src , ['media' => $media, 'priority' => $priority]);
+        						$this->context->controller->registerStylesheet(
+        							$css_file['key'],
+        							$theme_file_src ,
+        											array(
+        												'media' => $media,
+        												'priority' => $priority
+        											)
+        							);
         					}
         				}else{
         					$module_file_src = 'modules/'.$this->name.'/css/'.$css_file['src'];
         					if(self::isEmptyFileContet($root_path.$module_file_src)){
-        						$this->context->controller->registerStylesheet($css_file['key'], $module_file_src , ['media' => $media, 'priority' => $priority]);
+        						$this->context->controller->registerStylesheet(
+        							$css_file['key'],
+        							$module_file_src ,
+        											array(
+        												'media' => $media,
+        												'priority' => $priority
+        											)
+        							);
         					}
         				}
     				}
@@ -195,12 +209,26 @@ class thnxblogtags extends Module implements WidgetInterface {
 	        			if(isset($js_file['load_theme']) && ($js_file['load_theme'] == true)){
 	        				$theme_file_src = 'themes/'.$theme_name.'/assets/js/'.$js_file['src'];
 	        				if(self::isEmptyFileContet($root_path.$theme_file_src)){
-	        					$this->context->controller->registerJavascript($js_file['key'], $theme_file_src , ['position' => $position, 'priority' => $priority]);
+	        					$this->context->controller->registerJavascript(
+	        						$js_file['key'],
+	        						$theme_file_src ,
+	        										array(
+	        											'position' => $position,
+	        											'priority' => $priority
+	        										)
+	        						);
 	        				}
 	        			}else{
 		        			$module_file_src = 'modules/'.$this->name.'/js/'.$js_file['src'];
 	        				if(self::isEmptyFileContet($root_path.$module_file_src)){
-		        				$this->context->controller->registerJavascript($js_file['key'], $module_file_src , ['position' => $position, 'priority' => $priority]);
+		        				$this->context->controller->registerJavascript(
+		        					$js_file['key'],
+		        					$module_file_src ,
+		        									array(
+		        										'position' => $position,
+		        										'priority' => $priority
+		        									)
+		        					);
 	        				}
 	        			}
         			}
